@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincsenzo</title>
+    <link rel="stylesheet" href="statics/style.css">
+</head>
+<body>
+    <main>
+        <h1>Vincsenzo</h1>
+        <nav>
+            <a href="index.html">home</a>
+            <p>|</p>
+            <a href="blog.html">blog</a>
+            <p>|</p>
+            <a href="tutorials.html">tutorials</a>
+            <p>|</p>
+            <a href="more.html">more</a>
+        </nav>
+        <article>
+            <h2>How to set up django with gunicorn and nginx</h2>
+            <h3>Example</h3>
+            <p class="blog-p">
+                Example setup for a django app named Flashcards app. Linux user named: django_user (a user that has access to the directory the django project is in)
+            </p>
+            <p class="blog-p">
+                Create service file for gunicorn at <code class="inline-code">/etc/systemd/system/gunicorn.service</code>
+            </p>
+            <pre>
+                <code class="code-block">
+    [Unit]
+    Description=Gunicorn daemon for flashcards app
+    Requires=flashcards_gunicorn.socket
+    After=network.target
+    
+    [Service]
+    User=django_user
+    Group=www-data
+    WorkingDirectory=/srv/Flashcard_app
+    ExecStart=/srv/myenv/bin/gunicorn --access-logfile -  --workers 1 --bind unix:/run/flashcards_gunicorn.sock Flashcards.wsgi:application
+    
+    [Install]
+    WantedBy=multi-user.target
+                </code>
+            </pre>
+            <p class="blog-p">
+                Create socket file for gunicorn at <code class="inline-code">/etc/systemd/system/gunicorn.socket</code>
+            </p>
+            <pre>
+                <code class="code-block">
+    [Unit]
+    Description=gunicorn socket for flashcards app
+    
+    [Socket]
+    ListenStream=/run/flashcards_gunicorn.sock
+    
+    [Install]
+    WantedBy=sockets.target
+                </code>
+            </pre>
+        </article>
+    </main>
+</body>
+</html>
