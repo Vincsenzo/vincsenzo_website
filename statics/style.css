@@ -94,12 +94,12 @@ pre {
     overflow: scroll;
     border: 1px solid #ddd;
     background-color: #f4f4f4;
+    padding: 15px 20px;
 }
 
 .inline-code {
     display: inline;
     background-color: #f9f9f9;
-    padding: 2px 4px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }
